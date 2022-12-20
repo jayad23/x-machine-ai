@@ -1,22 +1,16 @@
-import React, { Fragment } from 'react'
-import { Button } from 'reactstrap'
+import React from 'react'
+import { Button, Box, Typography } from '@mui/material'
 
 const Welcome = ({ send }) => {
     const handleStart = () => {
         send("START")
     }
+
     return (
-        <div>
-            <h1>Welcome to flight booking with machine state</h1>
-            <Button onClick={handleStart} size='small'
-                style={{
-                    backgroundColor: "purple",
-                    width: "20%",
-                    padding: "10px"
-                }}>
-                Start
-            </Button>
-        </div>
+        <Box component="div">
+            <Typography variant="title" component="h1">Welcome to flight booking with machine state</Typography>
+            <Button onClick={handleStart} variant="contained" size="large" color="secondary" >Start</Button>
+        </Box>
     )
 }
 export default Welcome

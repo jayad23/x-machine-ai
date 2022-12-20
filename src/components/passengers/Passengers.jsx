@@ -1,3 +1,4 @@
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState } from 'react'
 import { FormGroup, Input } from 'reactstrap'
 
@@ -7,41 +8,48 @@ const Passengers = ({ handleNames }) => {
     const handleChange = (value) => {
         let count = 0;
         const passengers = []
-        for (let i = 0;i < value;i++)
-        {
+        for (let i = 0;i < value;i++) {
             count += 1
-            const pushedValue = `Name of passenger ${ count }`;
-            const name = `passanger_number_${ count }`
+            const pushedValue = `Name of passenger ${count}`;
+            const name = `passanger_number_${count}`
             passengers.push({ id: count, val: pushedValue, name });
         }
         setNumberOfPs(passengers);
     }
 
     return (
-        <FormGroup>
-            <Input type="select" onChange={(e) => handleChange(e.target.value)}>
-                <option>
+        <FormControl fullWidth>
+            <InputLabel color='secondary' fullWidth id="demo-simple-select-label">How many people are traveling?</InputLabel>
+            <Select
+                fullWidth
+                sx={{ minWidth: "320px" }}
+                color="secondary"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="How many people are traveling?"
+                onChange={(e) => handleChange(e.target.value)}>
+                <MenuItem>
                     How many are you traveling?
-                </option>
+                </MenuItem>
                 {
                     [1, 2, 3, 4, 5].map(numberOfPassengers => (
-                        <option key={numberOfPassengers}>
+                        <MenuItem value={numberOfPassengers} key={numberOfPassengers}>
                             {numberOfPassengers}
-                        </option>
+                        </MenuItem>
                     ))
                 }
-            </Input>
+            </Select>
             {
                 numberOfPs &&
-                <div className='d-flex flex-column gap-2 mt-2'>
+                <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
                     {
                         numberOfPs.map((psgrs, index) => (
-                            <Input key={psgrs.id} placeholder={psgrs.val} name={psgrs.name} onChange={handleNames} />
+                            <TextField key={psgrs.id} label={psgrs.val} name={psgrs.name} onChange={handleNames} sx={{ marginTop: "10px" }} />
                         ))
                     }
-                </div>
+                </Box>
             }
-        </FormGroup>
+        </FormControl>
     )
 }
 

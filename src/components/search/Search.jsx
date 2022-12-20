@@ -1,29 +1,35 @@
-import React, { Fragment, useState } from 'react'
-import { FormGroup, Input } from 'reactstrap';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const Search = ({ setSearch, countries }) => {
 
     return (
-        <Fragment>
-            <FormGroup>
-                <Input
-                    type="select"
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+                <InputLabel color='secondary' fullWidth id="demo-simple-select-label">Choose a destionation</InputLabel>
+                <Select
+                    fullWidth
+                    sx={{ minWidth: "320px" }}
+                    color="secondary"
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Choose a destination"
                     onChange={(e) => e.target.value === "Please, select from options."
                         ?
                         null :
                         setSearch(e.target.value)}
                 >
-                    <option>Choose a destination</option>
+                    <MenuItem disabled value={0}>Choose a destination</MenuItem>
                     {countries?.map((country) =>
-                        <option
+                        <MenuItem
+                            key={country.name.common}
                             value={country.name.common}
-                            key={country.name.common}>
+                        >
                             {country.name.common}
-                        </option>)
+                        </MenuItem>)
                     }
-                </Input>
-            </FormGroup>
-        </Fragment>
+                </Select>
+            </FormControl>
+        </Box>
     )
 }
 

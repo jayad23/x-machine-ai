@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import Welcome from '../components/welcome/Welcome'
 import { useMachine } from '@xstate/react'
 import { bookings } from '../machines/bookings'
@@ -7,9 +7,10 @@ import Search from '../components/search/Search'
 import Tickets from '../components/tickets/Tickets'
 import Passengers from '../components/passengers/Passengers'
 import Success from '../components/success/Success'
-import { Row, Col, Card, CardTitle, CardText, Button } from 'reactstrap'
+import { Row, Col, Card, CardText } from 'reactstrap'
+import { Box, Button, Typography } from '@mui/material'
 import { IoReturnUpBack } from 'react-icons/io5'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useGetHandlenames, useHandleNextSteps, useGetTitle } from '../hooks/useHandlenames'
 
@@ -20,7 +21,7 @@ const Layout = () => {
     const { namesOfPassengers, handleNames } = useGetHandlenames();
     const { handleNextStep, handleBack } = useHandleNextSteps(state, send,
         destination, namesOfPassengers, dates);
-    const { RenderTitle, titleFlex } = useGetTitle(state)
+    const { RenderTitle } = useGetTitle(state)
 
     const RenderComponent = () => {
         if (state.matches("search")) return <Search
@@ -35,9 +36,8 @@ const Layout = () => {
     }
 
     const renderText = () => {
-        if (destination)
-        {
-            const searchDestination = `You have chosen ${ destination } as your destination.`
+        if (destination) {
+            const searchDestination = `You have chosen ${destination} as your destination.`
             return searchDestination;
         }
     }
@@ -53,10 +53,8 @@ const Layout = () => {
                         <Col sm="12">
                             <Card className={style['containerGlass']}>
                                 <div className='p-3'>
-                                    <div className={titleFlex}>
-                                        <CardTitle tag="h5">
-                                            {RenderTitle()}
-                                        </CardTitle>
+                                    <Box component="div" sx={{ marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
+                                        <Typography variant="h5" component="div" color="secondary" sx={{ fontWeight: "bolder" }}>{RenderTitle()}</Typography>
                                         {
                                             state.matches("search") || state.matches("success") ?
                                                 null :
@@ -68,18 +66,10 @@ const Layout = () => {
                                                     style={{ cursor: "pointer", marginLeft: "15px" }}
                                                 />
                                         }
-                                    </div>
+                                    </Box>
                                     {RenderComponent()}
-                                    <CardText>
-                                        {renderText()}
-                                    </CardText>
-                                    <Button
-                                        onClick={handleNextStep}
-                                        className='w-100'
-                                        style={state.matches("success") ?
-                                            { backgroundColor: "#1c5116" } :
-                                            { backgroundColor: "#3F1651" }}
-                                    >
+                                    <Typography variant="subtitle1" component="div" color="black" sx={{ fontWeight: "bolder", marginTop: "10px" }}>{renderText()}</Typography>
+                                    <Button onClick={handleNextStep} variant="contained" color="secondary" size="large" sx={{ marginTop: "10px" }}>
                                         {state.matches("success") ? "PURCHASE COMPLETE" : "CONTINUE"}
                                     </Button>
                                 </div>

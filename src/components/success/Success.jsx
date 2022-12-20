@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import { Box, Typography } from '@mui/material';
+import React from 'react'
 import { IoCheckmarkCircleSharp } from "react-icons/io5"
-import { Row, Col } from "reactstrap"
 const Success = ({ state }) => {
-    const keys = ["passanger_number_1", "passanger_number_2"];
-    console.log(state.context.namesOfPassengers)
     return (
-        <div className='d-flex justify-content-center flex-column align-items-center'>
+        <Box component="div" textAlign="center">
             <IoCheckmarkCircleSharp size={102} color="#45ea0f" />
-            <div>
+            <Box component="div" sx={{ display: "flex", flexDirection: "column" }}>
                 {
                     state.context.namesOfPassengers &&
                     state.context.namesOfPassengers.length > 0 &&
                     state.context.namesOfPassengers.map((person, index) => (
-                        <p
-                            key={index}>
-                            {person[`passanger_number_${ index + 1 }`]}
-                        </p>
+                        <Typography
+                            key={index}
+                            variant="subtitle1" component="div" color="black"
+                            sx={{ fontWeight: "bolder", marginTop: "10px" }}
+                        >
+                            {person[`passanger_number_${index + 1}`]}
+                        </Typography>
                     ))
                 }
-            </div>
-        </div>
+            </Box>
+        </Box >
     )
 }
 
